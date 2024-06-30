@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ErrorHandlingExample {
+    uint public number;
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    // Function to set a number, requires caller to be the owner
+    function setNumber(uint _num) public {
+        require(msg.sender == owner, "Only the owner can set the number");
+        number = _num;
+    }
+
+    // Function to double the number, reverts if the number is zero
+    function doubleNumber() public {
+        require(number != 0, "Number must be non-zero");
+        number *= 2;
+    }
+
+    // Function to get the number
+    function getNumber() public view returns (uint) {
+        return number;
+    }
+
+    // Function to simulate an assertion: Ensures number is not zero
+    function checkNumber() public view returns (bool) {
+        assert(number != 0);
+        return true;
+    }
+
+    // Function to simulate a revert: Simulates an invalid operation
+    function simulateError() public pure {
+        revert("Invalid operation occurred");
+    }
+}
